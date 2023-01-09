@@ -41,8 +41,6 @@
 </template>
 
 <script>
-// import MainPage from './components/MainPage';
-
 export default {
   name: 'App',
   computed: {
@@ -50,12 +48,11 @@ export default {
       return true;
     }
   },
-  // components: {
-  //   MainPage,
-  // },
-
   data: () => ({
     isAuthenticated: true
   }),
+  mounted() {
+    this.$store.commit('getData');
+  }
 };
 </script>
