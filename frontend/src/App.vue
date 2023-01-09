@@ -5,56 +5,57 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+      <div v-if="isMainPage">
+        <h1>Nominations</h1>
       </div>
-
+      <div v-else class='d-flex'>
+        <v-btn icon class='mr-3'>
+          <v-icon large>
+            mdi-arrow-left
+          </v-icon>
+        </v-btn>
+        <h1>
+          Some participant
+        </h1>
+      </div>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <div v-if="!isAuthenticated">
+        <v-btn @click="isAuthenticated=!isAuthenticated">
+          <span>Войти в аккаунт</span>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn class='mr-2'>
+          <span>Профиль</span>
+        </v-btn>
+        <v-btn @click="isAuthenticated=!isAuthenticated">
+          <span>Выйти</span>
+        </v-btn>
+      </div>
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+// import MainPage from './components/MainPage';
 
 export default {
   name: 'App',
-
-  components: {
-    HelloWorld,
+  computed: {
+    isMainPage() {
+      return true;
+    }
   },
+  // components: {
+  //   MainPage,
+  // },
 
   data: () => ({
-    //
+    isAuthenticated: true
   }),
 };
 </script>
