@@ -1,9 +1,7 @@
 <template>
     <v-container>
-      <v-row class="d-flex justify-content-center">
-        <span class="text-center text-h5 col-12">Скоро заканчивается конкурс художников в номинации "Майское утро"!<br>Проголосуйте скорее, если вы все еще этого не сделали!</span>
-      </v-row>
-      {{ $route.params.id }}
+      {{ participant.name }} <br>
+      {{ participant.description }}
     </v-container>
   </template>
   
@@ -13,6 +11,18 @@
       data() {
         return {
           participantId: this.$route.params.id
+        }
+      },
+      computed: {
+        participant() {
+          let participants = this.$store.state.participantsData;
+          try{
+            let participant = participants.find((el) => el.id == this.$route.params.id);
+            return participant.profile;
+          }
+          catch {
+            return {};
+          }
         }
       }
     }

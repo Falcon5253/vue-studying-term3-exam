@@ -6,29 +6,29 @@
       dark
     >
       <div v-if="isMainPage">
-        <h1>Nominations</h1>
+        <h1 class="text-h5">Nominations</h1>
       </div>
       <div v-else class='d-flex'>
-        <v-btn icon class='mr-3'>
-          <v-icon large>
+        <v-btn icon class='mr-3' to="/">
+          <v-icon medium>
             mdi-arrow-left
           </v-icon>
         </v-btn>
         <h1>
-          Some participant
+          {{ participantName }}
         </h1>
       </div>
       <v-spacer></v-spacer>
       <div v-if="!isAuthenticated">
-        <v-btn @click="isAuthenticated=!isAuthenticated">
+        <v-btn @click="isAuthenticated=!isAuthenticated" text>
           <span>Войти в аккаунт</span>
         </v-btn>
       </div>
       <div v-else>
-        <v-btn class='mr-2'>
+        <v-btn class='mr-2' text>
           <span>Профиль</span>
         </v-btn>
-        <v-btn @click="isAuthenticated=!isAuthenticated">
+        <v-btn @click="isAuthenticated=!isAuthenticated" text>
           <span>Выйти</span>
         </v-btn>
       </div>
@@ -45,7 +45,26 @@ export default {
   name: 'App',
   computed: {
     isMainPage() {
-      return true;
+      console.log(this.$route.fullPath)
+      if (this.$route.fullPath == "/") {
+        return true;
+      }
+      else {
+        return false;
+      }
+    },
+    participantName() {
+      if (!this.isMainPage) {
+        let participants = this.$store.state.participantsData;
+        try{
+          let participant = participants.find((el) => el.id == this.$route.params.id);
+          return participant.username;
+        }
+        catch {
+          return "";
+        }
+      }
+      return "";
     }
   },
   data: () => ({
@@ -53,6 +72,6 @@ export default {
   }),
   mounted() {
     this.$store.commit('getData');
-  }
+  },
 };
 </script>
