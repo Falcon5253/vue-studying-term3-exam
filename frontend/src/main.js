@@ -48,6 +48,20 @@ const store = new Vuex.Store({
     userData: [],
     loading: false,
   },
+  getters: {
+    participantsData (state) {
+      return state.participantsData;
+    },
+    participantTemplate (state) {
+      return state.participantTemplate;
+    },
+    userData(state) {
+      return state.userData;
+    },
+    loading(state) {
+      return state.loading
+    }
+  },
   mutations: {
     getData (state) {
       axios.get('./main.json')
@@ -64,8 +78,37 @@ const store = new Vuex.Store({
       })
       .then(res => {
         state.userData.push(res.data.data);
+      })
+      .finally( () => {
         state.loading = false;
-      });
+      })
+    },
+    sendComment (state, data) {
+      state.loading = true;
+      const json = JSON.stringify(data);
+      axios.post('http://httpbin.org/post', json, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        let data = res.data.data;
+        let participants = state.participantsData;
+        let participant = participants.find((el) => {
+          data = JSON.parse(data);
+          return el.id == data.reviewForId;
+        });
+        let index = participants.indexOf(participant);
+        state.participantsData[index].comments.splice(0, 0, {
+          id: data.name + Math.random(),
+          text: data.text,
+          username: data.name,
+          picture: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
+        });
+      })
+      .finally( () => {
+        state.loading = false;
+      })
     },
   }
 })

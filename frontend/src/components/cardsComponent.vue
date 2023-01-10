@@ -18,7 +18,7 @@
     name: 'cardsComponent',
     computed: {
         participantsData() {
-          return this.$store.state.participantsData
+          return this.$store.getters.participantsData
         }
     },
     methods: {

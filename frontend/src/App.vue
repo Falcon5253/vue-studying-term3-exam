@@ -53,7 +53,7 @@ export default {
     },
     participantName() {
       if (!this.isMainPage) {
-        let participants = this.$store.state.participantsData;
+        let participants = this.$store.getters.participantsData;
         try{
           let participant = participants.find((el) => el.id == this.$route.params.id);
           return participant.username;

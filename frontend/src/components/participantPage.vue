@@ -11,11 +11,13 @@
         ref="form"
         v-model="valid"
         lazy-validation
-        :disabled="isLoading || votedFor"
+        :disabled="isLoading || votedFor || !canVote"
       >
         <div v-if="votedFor">
-          <p class='text-h5' > Ваш голос был принят!</p>
+          <p class='text-h5'> Ваш голос был принят!</p>
         </div>
+        <div v-else-if='!canVote'>
+          <p class='text-h5'> Вы проголосовали уже за слишком большое число других участников </p></div>
         <div v-else>
           <p class='text-h5'> Понравилась работа автора? Так проголосуйте за нее! </p>
         </div>
@@ -46,13 +48,20 @@
       <v-img class='mr-5' :src="participantProfile.picture" width="300" height="400"></v-img>
       <p class='text-h6'>{{ participantProfile.description }}</p>
     </div>
+    <reviewsList
+      :comments="participant.comments"
+    ></reviewsList>
   </v-container>
 </template>
 
 <script>
+  import reviewsList from './reviewsList.vue';
 
   export default {
     name: 'participantPage',
+    components: {
+      reviewsList
+    },
     data() {
       return {
         participantId: this.$route.params.id,
@@ -71,30 +80,31 @@
     },
     computed: {
       participantProfile() {
-        let participants = this.$store.state.participantsData;
+        let participants = this.$store.getters.participantsData;
         try{
           let participant = participants.find((el) => el.id == this.$route.params.id);
           return participant.profile;
         }
         catch {
-          return this.$store.state.participantTemplate.profile;
+          return this.$store.getters.participantTemplate.profile;
         }
       },
       participant() {
-        let participants = this.$store.state.participantsData;
+        let participants = this.$store.getters.participantsData;
         try{
           let participant = participants.find((el) => el.id == this.$route.params.id);
+          
           return participant;
         }
         catch {
-          return this.$store.state.participantTemplate;
+          return this.$store.getters.participantTemplate;
         }
       },
       isLoading() {
-        return this.$store.state.loading
+        return this.$store.isLoading
       },
       votedFor() {
-        let votedIds = this.$store.state.userData.filter(el => {
+        let votedIds = this.$store.getters.userData.filter(el => {
           let jsonEl = JSON.parse(el);
           console.log(jsonEl);
           if (jsonEl.voteId == this.$route.params.id) {
@@ -107,6 +117,12 @@
           return true
         }
         return false;
+      },
+      canVote() {
+        if (this.$store.getters.userData.length > 2) {
+          return false
+        }
+        return true
       }
     },
     methods: {
@@ -124,5 +140,26 @@
         this.$store.commit('sendUserData', data);
       }
     },
+    mounted() {
+      if (this.$store.getters.userData.length > 0) {
+        let votedIds = this.$store.getters.userData.filter(el => {
+          let jsonEl = JSON.parse(el);
+          if (jsonEl.voteId == this.$route.params.id) {
+            return true;
+          }
+        });
+        if (votedIds.length > 0) {
+          let data = JSON.parse(votedIds[0])
+          this.name = data.name;
+          this.email = data.email;
+        }
+        else {
+          let data = this.$store.getters.userData;
+          data = JSON.parse(data[data.length-1]);
+          this.email = data.email;
+          this.name = data.name;
+        }
+      }
+    }
   }
 </script>
