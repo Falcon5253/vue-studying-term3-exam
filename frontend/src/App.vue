@@ -9,7 +9,7 @@
         <h1 class="text-h5">Nominations</h1>
       </div>
       <div v-else class='d-flex'>
-        <v-btn icon class='mr-3' to="/">
+        <v-btn icon class='mr-3' @click="goMainMenu">
           <v-icon medium>
             mdi-arrow-left
           </v-icon>
@@ -33,8 +33,7 @@
         </v-btn>
       </div>
     </v-app-bar>
-
-    <v-main>
+    <v-main style="height: 50px; overflow-y: scroll; margin-top: 64px; padding-top: 0px;">
       <router-view></router-view>
     </v-main>
   </v-app>
@@ -45,7 +44,6 @@ export default {
   name: 'App',
   computed: {
     isMainPage() {
-      console.log(this.$route.fullPath)
       if (this.$route.fullPath == "/") {
         return true;
       }
@@ -70,8 +68,24 @@ export default {
   data: () => ({
     isAuthenticated: true
   }),
+  methods: {
+    goMainMenu() {
+      this.resetScroll();
+      this.$router.push("/");
+    },
+    resetScroll() {
+      document.querySelector(".v-main").scrollTo(0, 0);
+    }
+  },
   mounted() {
     this.$store.commit('getData');
+    this.$root.$on("reset-scroll", this.resetScroll);
   },
 };
 </script>
+
+<style>
+html {
+  overflow-y: hidden;
+}
+</style>
