@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-content-center">
+    <v-row class="d-flex justify-content-center print-hidden">
       <span class="text-center banner-text col-12">Скоро заканчивается конкурс художников в номинации "Майское утро"!<br>Проголосуйте скорее, если вы все еще этого не сделали!</span>
     </v-row>
     <h2 class='mb-10 mt-5 page-title'>Майское утро</h2>
@@ -100,6 +100,20 @@
   }
   .page-title {
     font-size: 24px;
+  }
+}
+@media print {
+  .v-main {
+    margin-top: 0;
+  }
+  .v-main__wrap {
+    margin-top: 0;
+  }
+  .print-hidden {
+    display: none !important;
+  }
+  button, a, footer, header {
+    display: none !important;
   }
 }
 </style>

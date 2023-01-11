@@ -76,7 +76,7 @@
         </v-btn>
       </div>
     </v-app-bar>
-    <v-main style="height: 50px; overflow-y: scroll; margin-top: 64px; padding-top: 0px;">
+    <v-main style="height: 50px; overflow-y: scroll; padding-top: 0px;">
       <router-view></router-view>
     </v-main>
     <v-footer
@@ -208,6 +208,9 @@ html {
   .appTitle {
     margin-top: 5px;
     font-size: 24px;
+  }
+  .v-main {
+    margin-top: 64px;
   }
 }
 </style>

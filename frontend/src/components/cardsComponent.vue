@@ -3,6 +3,9 @@
       <v-card class='d-flex flex-column flex-sm-row cards-list__item' v-for='item in participantsData'  :key="item.id">
         <div class='d-flex flex-column align-items-center mr-2 '>
           <v-img class='mb-2 rounded card-image' :src="item.image"></v-img>
+          <div class="print-view">
+            <img class="print-view-img" :src="item.image" alt="Картина">
+          </div>
           <v-btn color="primary" class='mb-2' @click="goToItem(item.id)">
             Подробнее
           </v-btn>
@@ -50,6 +53,9 @@
   display:block;
   height: 100%;
 }
+.print-view {
+  display: none;
+}
 @media (max-width: 1919px) {
   .cards-list {
     display: flex;
@@ -75,6 +81,24 @@
 @media (max-width: 600px) {
   .card-image {
     width: 100%;
+  }
+}
+@media print {
+  html, body {
+    overflow: scroll;
+  }
+  .card-image {
+    display: none !important;
+  }
+  .cards-list {
+    page-break-inside: avoid;
+  }
+  .print-view {
+    display: block;
+    width: 100%;
+    &-img {
+      width: 100%;
+    }
   }
 }
 </style>
