@@ -1,6 +1,5 @@
 <template>
     <v-row class='d-flex flex-wrap justify-content-between'>
-      <!-- СДЕЛАТЬ РЕЗИНОВУЮ ВЕРСТКУ ДЛЯ КРАСИВОГО ОТОБРАЖЕНИЯ -->
       <v-card class='col-4 d-flex' v-for='item in participantsData'  :key="item.id">
         <div class='d-flex flex-column align-items-center mr-2 '>
           <v-img class='mb-2 rounded' :src="item.image" max-width="200"></v-img>
@@ -8,7 +7,10 @@
             Подробнее
           </v-btn>
         </div>
-        <span  style="display:block; height: 100%;"> {{ item.about }} </span>
+        <div class='d-flex col-8 flex-column'>
+          <span  style="display:block; height: 100%;"> {{ item.about }} </span>
+          <a :href="item.image" v-if="item.hasLink">{{ item.image }}</a>
+        </div>
       </v-card>
     </v-row>
 </template>

@@ -12,6 +12,31 @@
             mdi-refresh
           </v-icon>
         </v-btn>
+        <v-btn v-if="!filtered" icon @click="toggleFilter()" color="accent">
+          <v-icon medium>
+            mdi-filter
+          </v-icon>
+        </v-btn>
+        <v-btn v-else icon @click="toggleFilter()">
+          <v-icon medium>
+            mdi-filter
+          </v-icon>
+        </v-btn>
+        <v-btn v-if="sortBy == ''" class='ml-5  mt-2' button @click="toggleSort()">
+          sort by description
+        </v-btn>
+        <v-btn v-else-if="sortBy == 'byName'" class='ml-5  mt-2' button @click="toggleSort()">
+          sort by description
+          <v-icon medium class='ml-3'>
+            mdi-arrow-down
+          </v-icon>
+        </v-btn>
+        <v-btn v-else class='ml-5  mt-2' button @click="toggleSort()">
+          sort by description
+          <v-icon medium class='ml-3'>
+            mdi-arrow-up
+          </v-icon>
+        </v-btn>
       </div>
       <div v-else class='d-flex'>
         <v-btn icon class='mr-3' @click="goMainMenu">
@@ -33,6 +58,9 @@
       <v-btn icon :disabled="searchIsEmpty" @click="startSearching">
         <v-icon>mdi-arrow-top-right</v-icon>
       </v-btn>
+      <v-btn text href="/main.json">
+         <span>main.json</span>
+      </v-btn>
       <div v-if="!isAuthenticated">
         <v-btn @click="isAuthenticated=!isAuthenticated" text>
           <span>Войти в аккаунт</span>
@@ -50,6 +78,23 @@
     <v-main style="height: 50px; overflow-y: scroll; margin-top: 64px; padding-top: 0px;">
       <router-view></router-view>
     </v-main>
+    <v-footer
+      class='footer'
+      color="primary lighten-1"
+      padless
+    >
+    <v-row
+      justify="center"
+      no-gutters
+    >
+      <v-col
+        class="primary py-4 text-center white--text"
+        cols="12"
+      >
+      <v-btn class="link" text href="https://github.com/Falcon5253/vue-studying-term3-exam">Link to my GitHub</v-btn>
+      </v-col>
+    </v-row>
+    </v-footer>
   </v-app>
 </template>
 
@@ -87,6 +132,8 @@ export default {
   },
   data: () => ({
     searchQuery: "",
+    filtered: false,
+    sortBy: "",
     isAuthenticated: true
   }),
   methods: {
@@ -103,6 +150,22 @@ export default {
     },
     refresh() {
       this.$store.dispatch('getData');
+    },
+    toggleFilter() {
+      this.filtered = !this.filtered;
+      this.$root.$emit("toggleFilter");
+    },
+    toggleSort() {
+      if (this.sortBy == ""){
+        this.sortBy = "byName";
+      }
+      else if (this.sortBy == "byName") {
+        this.sortBy = "!byName";
+      }
+      else {
+        this.sortBy = "";
+      }
+      this.$root.$emit("toggleSort");
     }
   },
   mounted() {
@@ -113,6 +176,10 @@ export default {
 </script>
 
 <style>
+.link {
+  color: white !important;
+  text-decoration: underline;
+}
 html {
   overflow-y: hidden;
 }

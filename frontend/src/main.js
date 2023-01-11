@@ -19,7 +19,7 @@ import profilePage from "@/components/profilePage"
 
 // Router
 const routes = [
-  { path: '/', component: mainPage },
+  { path: '/', component: mainPage},
   { path: '/participant/:id', component: participantPage },
   { path: '/search', component: searchPage },
   { path: '/profile', component: profilePage}
