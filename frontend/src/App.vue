@@ -22,16 +22,16 @@
             mdi-filter
           </v-icon>
         </v-btn>
-        <v-btn v-if="sortBy == ''" class='ml-5  mt-2' button @click="toggleSort()">
+        <v-btn v-if="sortBy == ''" class='ml-5  mt-2 sortField' text @click="toggleSort()">
           sort by description
         </v-btn>
-        <v-btn v-else-if="sortBy == 'byName'" class='ml-5  mt-2' button @click="toggleSort()">
+        <v-btn v-else-if="sortBy == 'byName'" class='ml-5  mt-2 sortField' text @click="toggleSort()">
           sort by description
-          <v-icon medium class='ml-3'>
+          <v-icon medium class='ml-3 sortField'>
             mdi-arrow-down
           </v-icon>
         </v-btn>
-        <v-btn v-else class='ml-5  mt-2' button @click="toggleSort()">
+        <v-btn v-else class='ml-5  mt-2' text @click="toggleSort()">
           sort by description
           <v-icon medium class='ml-3'>
             mdi-arrow-up
@@ -50,23 +50,24 @@
       </div>
       <v-spacer></v-spacer>
       <v-text-field
+        class='searchField'
         v-model="searchQuery"
         hide-details
         prepend-icon="mdi-magnify"
         single-line
       ></v-text-field>
-      <v-btn icon :disabled="searchIsEmpty" @click="startSearching">
+      <v-btn class='searchField' icon :disabled="searchIsEmpty" @click="startSearching">
         <v-icon>mdi-arrow-top-right</v-icon>
       </v-btn>
-      <v-btn text href="/main.json">
+      <v-btn class='mobile-hidden' text href="/main.json">
          <span>main.json</span>
       </v-btn>
-      <div v-if="!isAuthenticated">
+      <div class='mobile-hidden' v-if="!isAuthenticated">
         <v-btn @click="isAuthenticated=!isAuthenticated" text>
           <span>Войти в аккаунт</span>
         </v-btn>
       </div>
-      <div v-else>
+      <div class='mobile-hidden' v-else>
         <v-btn class='mr-2' text to="/profile/">
           <span>Профиль</span>
         </v-btn>
@@ -188,5 +189,25 @@ html {
 }
 .appTitle:hover {
   cursor: default;
+}
+@media (max-width: 1263px) {
+  .searchField {
+    display: none;
+  }
+}
+@media (max-width: 959px) {
+  .sortField {
+    display: none;
+  }
+
+}
+@media (max-width: 650px) {
+  .mobile-hidden {
+    display: none;
+  }
+  .appTitle {
+    margin-top: 5px;
+    font-size: 24px;
+  }
 }
 </style>

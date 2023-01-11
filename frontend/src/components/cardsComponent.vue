@@ -1,18 +1,17 @@
 <template>
-    <v-row class='d-flex flex-wrap justify-content-between'>
-      <v-card class='col-4 d-flex' v-for='item in participantsData'  :key="item.id">
+    <div class='cards-list'>
+      <v-card class='d-flex flex-column flex-sm-row cards-list__item' v-for='item in participantsData'  :key="item.id">
         <div class='d-flex flex-column align-items-center mr-2 '>
-          <v-img class='mb-2 rounded' :src="item.image" max-width="200"></v-img>
+          <v-img class='mb-2 rounded card-image' :src="item.image"></v-img>
           <v-btn color="primary" class='mb-2' @click="goToItem(item.id)">
             Подробнее
           </v-btn>
         </div>
-        <div class='d-flex col-8 flex-column'>
-          <span  style="display:block; height: 100%;"> {{ item.about }} </span>
-          <a :href="item.image" v-if="item.hasLink">{{ item.image }}</a>
+        <div class='d-flex col-lg-7 flex-column'>
+          <span class='card-text'> {{ item.about }} <a :href="item.image" v-if="item.hasLink">{{ item.image }}</a></span>
         </div>
       </v-card>
-    </v-row>
+    </div>
 </template>
 
 <script>
@@ -27,3 +26,55 @@
     }
   }
 </script>
+
+<style lang='scss'>
+
+.cards-list {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2%;
+  row-gap: 10px;
+  justify-content: start;
+  &__item {
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 32%;
+  }
+}
+.card-image {
+  width: 200px;
+}
+.card-text {
+  display:block;
+  height: 100%;
+}
+@media (max-width: 1919px) {
+  .cards-list {
+    display: flex;
+    gap: 1%;
+    row-gap: 10px;
+    &__item {
+      padding-left: 10px;
+      padding-top: 10px;
+      width: 49%;
+    }
+  }
+}
+@media (max-width: 1263px) {
+  .cards-list {
+    row-gap: 10px;
+    &__item {
+      padding-left: 10px;
+      padding-top: 10px;
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .card-image {
+    width: 100%;
+  }
+}
+</style>

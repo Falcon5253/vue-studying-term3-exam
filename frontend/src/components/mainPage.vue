@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-content-center">
-      <span class="text-center text-h5 col-12">Скоро заканчивается конкурс художников в номинации "Майское утро"!<br>Проголосуйте скорее, если вы все еще этого не сделали!</span>
+      <span class="text-center banner-text col-12">Скоро заканчивается конкурс художников в номинации "Майское утро"!<br>Проголосуйте скорее, если вы все еще этого не сделали!</span>
     </v-row>
-    <h2 class='mb-10 mt-5 text-h2'>Майское утро</h2>
+    <h2 class='mb-10 mt-5 page-title'>Майское утро</h2>
     <cardsComponent :participantsData='participantsData'></cardsComponent>
   </v-container>
 </template>
@@ -77,4 +77,29 @@
     }
   }
 </script>
-
+<style>
+.banner-text {
+  font-size: 28px;
+}
+.page-title {
+  font-size: 52px;
+  font-weight: 400;
+}
+@media (max-width: 1920px) {
+  .banner-text {
+    font-size: 20px;
+  }
+  .page-title {
+    font-size: 32px;
+  }
+  
+}
+@media (max-width: 650px) {
+  .banner-text {
+    font-size: 14px;
+  }
+  .page-title {
+    font-size: 24px;
+  }
+}
+</style>
