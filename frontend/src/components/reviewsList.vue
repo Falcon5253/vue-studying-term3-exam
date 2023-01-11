@@ -1,21 +1,21 @@
 <template>
-    <v-list three-line class='d-flex flex-row flex-wrap'>
-    <h2 class='text-h2 mt-10 mb-5 col-12'>Отзывы о художнике</h2>
-    <div class='col-6'>
+    <v-list three-line class='d-flex flex-wrap'>
+    <h2 class='big-title col-12'>Отзывы о художнике</h2>
+    <div class='col-lg-6'>
         <template v-for="item in comments">
             <v-list-item :key="item.id">
-                <v-list-item-avatar style="width: 100px; height: 100px;">
-                <v-img :src="item.picture"></v-img>
+                <v-list-item-avatar style="width: 75px; height: 75px;">
+                    <v-img :src="item.picture"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                <v-list-item-title v-html="item.username" style="font-size: 28px;"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.text" style="font-size: 18px;"></v-list-item-subtitle>
+                <v-list-item-title v-html="item.username" style="font-size: 22px;"></v-list-item-title>
+                <v-list-item-subtitle v-html="item.text" style="font-size: 14px;"></v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </template>
     </div>
         <v-form
-            style="width: 50%;"
+            class='col-lg-6 col-12'
             ref="form"
             v-model="valid"
             lazy-validation
@@ -124,5 +124,39 @@
         },
     }
 </script>
-
-  
+<style>
+.text-desc {
+  font-size: 24px;
+}
+.form {
+  width: 50%;
+}
+.big-title {
+  font-size: 48px;
+  font-weight: 300;
+}
+.subtitle {
+  font-size: 32px;
+}
+@media (max-width: 1263px) {
+  .form {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+    .image {
+        width: 50px;
+        height: 50px;
+    }
+  .big-title {
+    font-size: 24px;
+    margin-top: 0;
+  }
+  .subtitle {
+    font-size: 18px;
+  }
+  .text-desc {
+    font-size: 14px;
+  }
+}
+</style>

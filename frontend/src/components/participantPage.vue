@@ -1,26 +1,27 @@
 <template>
   <v-container>
-    <h2 class="mt-5 text-h2 mb-2">Картина "{{ participant.alt[0].toUpperCase() + participant.alt.slice(1) }}"</h2>
-    <div class='d-flex'>
+    <h2 class="mt-5 mb-2 big-title">Картина "{{ participant.alt[0].toUpperCase() + participant.alt.slice(1) }}"</h2>
+    <div class='d-flex flex-column flex-lg-row'>
       <div>
-        <v-img class='mr-5' position="left center" :src="participant.image" width="800" height="600" contain></v-img>
-        <h3 class='text-h4 mt-2'>Описание</h3>
-        <p class='text-h6 mt-4'>{{ participant.about }}</p>
+        <v-img class='mr-5 image' position="left center" :src="participant.image" contain></v-img>
+        <h3 class='subtitle mt-2'>Описание</h3>
+        <p class='text-desc mt-4'>{{ participant.about }}</p>
       </div>
       <v-form
-        style="width: 50%;"
+        class="print-hidden form"
         ref="form"
         v-model="valid"
         lazy-validation
         :disabled="isLoading || votedFor || !canVote"
       >
-        <div v-if="votedFor">
-          <p class='text-h5'> Ваш голос был принят!</p>
+        <div v-if="votedFor"        class="print-hidden">
+          
+          <p class='text-desc'> Ваш голос был принят!</p>
         </div>
         <div v-else-if='!canVote'>
-          <p class='text-h5'> Вы проголосовали уже за слишком большое число других участников </p></div>
+          <p class='text-desc'> Вы проголосовали уже за слишком большое число других участников </p></div>
         <div v-else>
-          <p class='text-h5'> Понравилась работа автора? Так проголосуйте за нее! </p>
+          <p class='text-desc'> Понравилась работа автора? Так проголосуйте за нее! </p>
         </div>
         <v-text-field
           v-model="name"
@@ -44,10 +45,10 @@
 
     </div>
     
-    <h2 class='text-h2 mt-10 mb-5'>Автор: {{ participantProfile.name }}</h2>
-    <div class='d-flex'>
+    <h2 class='mt-10 mb-5 big-title'>Автор: {{ participantProfile.name }}</h2>
+    <div class='d-flex flex-column flex-lg-row'>
       <v-img class='mr-5' :src="participantProfile.picture" width="300" height="400"></v-img>
-      <p class='text-h6'>{{ participantProfile.description }}</p>
+      <p class='text-desc mt-3'>{{ participantProfile.description }}</p>
     </div>
     <reviewsList
       :comments="participant.comments"
@@ -163,3 +164,44 @@
     }
   }
 </script>
+<style>
+.image {
+  width: 800px;
+  height: 600px;
+}
+.text-desc {
+  font-size: 24px;
+}
+.form {
+  width: 50%;
+}
+.big-title {
+  font-size: 48px;
+  font-weight: 300;
+}
+.subtitle {
+  font-size: 32px;
+}
+@media (max-width: 1263px) {
+  .image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .form {
+    width: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .big-title {
+    font-size: 24px;
+  }
+  .subtitle {
+    font-size: 18px;
+  }
+  .text-desc {
+    font-size: 14px;
+  }
+}
+</style>
