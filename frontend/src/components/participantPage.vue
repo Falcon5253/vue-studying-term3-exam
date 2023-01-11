@@ -4,7 +4,8 @@
     <div class='d-flex'>
       <div>
         <v-img class='mr-5' position="left center" :src="participant.image" width="800" height="600" contain></v-img>
-        <p class='text-h6 mt-2'>{{ participant.about }}</p>
+        <h3 class='text-h4 mt-2'>Описание</h3>
+        <p class='text-h6 mt-4'>{{ participant.about }}</p>
       </div>
       <v-form
         style="width: 50%;"
@@ -69,7 +70,7 @@
         name: '',
         nameRules: [
           v => !!v || 'Name is required',
-          v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+          v => (v && v.length <= 24) || 'Name must be less than 24 characters',
         ],
         email: '',
         emailRules: [
@@ -106,7 +107,6 @@
       votedFor() {
         let votedIds = this.$store.getters.userData.filter(el => {
           let jsonEl = JSON.parse(el);
-          console.log(jsonEl);
           if (jsonEl.voteId == this.$route.params.id) {
             this.name = jsonEl.name;
             this.email = jsonEl.email;
@@ -137,7 +137,7 @@
       },
       sendDataCommit() {
         let data = { "name": this.name, "email": this.email, "voteId": this.$route.params.id };
-        this.$store.commit('sendUserData', data);
+        this.$store.dispatch('sendUserData', data);
       }
     },
     mounted() {

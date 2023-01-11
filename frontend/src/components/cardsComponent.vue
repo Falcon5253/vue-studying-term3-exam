@@ -16,15 +16,11 @@
 <script>
   export default {
     name: 'cardsComponent',
-    computed: {
-        participantsData() {
-          return this.$store.getters.participantsData
-        }
-    },
+    props: ["participantsData"],
     methods: {
       goToItem(id) {
         this.$root.$emit('reset-scroll');
-        this.$router.push("/" + id);
+        this.$router.push("/participant/" + id);
       }
     }
   }

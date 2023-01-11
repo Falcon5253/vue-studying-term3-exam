@@ -84,7 +84,6 @@
             updateEmail() {
                 this.$store.getters.userData.filter(el => {
                     let jsonEl = JSON.parse(el);
-                    console.log(jsonEl);
                     if (jsonEl.voteId == this.$route.params.id) {
                         this.email = jsonEl.email;
                         return jsonEl.email
@@ -95,7 +94,6 @@
             updateName() {
                 this.$store.getters.userData.filter(el => {
                     let jsonEl = JSON.parse(el);
-                    console.log(jsonEl);
                     if (jsonEl.voteId == this.$route.params.id) {
                         this.name = jsonEl.name;
                         return jsonEl.name
@@ -121,9 +119,7 @@
             },
             sendDataCommit() {
                 let data = { "name": this.name, "email": this.email, "text": this.text, "reviewForId": this.$route.params.id };
-                console.log(data)
-                this.$store.commit('sendComment', data);
-                console.log(data);
+                this.$store.dispatch('sendComment', data);
             }
         },
     }

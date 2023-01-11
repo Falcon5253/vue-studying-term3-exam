@@ -4,7 +4,7 @@
       <span class="text-center text-h5 col-12">Скоро заканчивается конкурс художников в номинации "Майское утро"!<br>Проголосуйте скорее, если вы все еще этого не сделали!</span>
     </v-row>
     <h2 class='mb-10 mt-5 text-h2'>Майское утро</h2>
-    <cardsComponent></cardsComponent>
+    <cardsComponent :participantsData='participantsData'></cardsComponent>
   </v-container>
 </template>
 
@@ -15,6 +15,11 @@
     name: 'mainPage',
     components: {
       cardsComponent
+    },
+    computed: {
+      participantsData() {
+        return this.$store.getters.participantsData
+      }
     },
   }
 </script>

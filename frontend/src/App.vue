@@ -5,8 +5,13 @@
       color="primary"
       dark
     >
-      <div v-if="isMainPage">
-        <h1 class="text-h5">Nominations</h1>
+      <div v-if="isMainPage" class='d-flex align-content-center'>
+        <h1 class='appTitle'>Nominations</h1>
+        <v-btn icon class='ml-3' @click="refresh()">
+          <v-icon medium>
+            mdi-refresh
+          </v-icon>
+        </v-btn>
       </div>
       <div v-else class='d-flex'>
         <v-btn icon class='mr-3' @click="goMainMenu">
@@ -19,13 +24,22 @@
         </h1>
       </div>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="searchQuery"
+        hide-details
+        prepend-icon="mdi-magnify"
+        single-line
+      ></v-text-field>
+      <v-btn icon :disabled="searchIsEmpty" @click="startSearching">
+        <v-icon>mdi-arrow-top-right</v-icon>
+      </v-btn>
       <div v-if="!isAuthenticated">
         <v-btn @click="isAuthenticated=!isAuthenticated" text>
           <span>Войти в аккаунт</span>
         </v-btn>
       </div>
       <div v-else>
-        <v-btn class='mr-2' text>
+        <v-btn class='mr-2' text to="/profile/">
           <span>Профиль</span>
         </v-btn>
         <v-btn @click="isAuthenticated=!isAuthenticated" text>
@@ -63,22 +77,36 @@ export default {
         }
       }
       return "";
+    },
+    searchIsEmpty() {
+      if (this.searchQuery == "") {
+        return true
+      }
+      return false;
     }
   },
   data: () => ({
+    searchQuery: "",
     isAuthenticated: true
   }),
   methods: {
     goMainMenu() {
       this.resetScroll();
       this.$router.push("/");
+      this.searchQuery = "";
     },
     resetScroll() {
       document.querySelector(".v-main").scrollTo(0, 0);
+    },
+    startSearching() {
+      this.$router.push("/search?query=" + this.searchQuery);
+    },
+    refresh() {
+      this.$store.dispatch('getData');
     }
   },
   mounted() {
-    this.$store.commit('getData');
+    this.$store.dispatch('getData');
     this.$root.$on("reset-scroll", this.resetScroll);
   },
 };
@@ -87,5 +115,11 @@ export default {
 <style>
 html {
   overflow-y: hidden;
+}
+.appTitle {
+  font-weight: 400;
+}
+.appTitle:hover {
+  cursor: default;
 }
 </style>

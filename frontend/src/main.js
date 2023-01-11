@@ -12,13 +12,17 @@ Vue.config.productionTip = false
 //  Components
 import mainPage from "@/components/mainPage"
 import participantPage from "@/components/participantPage"
+import searchPage from "@/components/searchPage"
+import profilePage from "@/components/profilePage"
 
 
 
 // Router
 const routes = [
   { path: '/', component: mainPage },
-  { path: '/:id', component: participantPage },
+  { path: '/participant/:id', component: participantPage },
+  { path: '/search', component: searchPage },
+  { path: '/profile', component: profilePage}
 ]
 
 const router = new VueRouter({
@@ -92,10 +96,9 @@ const store = new Vuex.Store({
         }
       })
       .then((res) => {
-        let data = res.data.data;
+        let data = JSON.parse(res.data.data);
         let participants = state.participantsData;
         let participant = participants.find((el) => {
-          data = JSON.parse(data);
           return el.id == data.reviewForId;
         });
         let index = participants.indexOf(participant);
@@ -110,7 +113,18 @@ const store = new Vuex.Store({
         state.loading = false;
       })
     },
-  }
+  },
+  actions: {
+    getData (context, data) {
+      context.commit('getData', data);
+    },
+    sendComment(context, data) {
+      context.commit('sendComment', data);
+    },
+    sendUserData(context, data) {
+      context.commit('sendUserData', data);
+    }
+  },
 })
 
 
