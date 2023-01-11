@@ -7,31 +7,31 @@
     >
       <div v-if="isMainPage" class='d-flex align-content-center'>
         <h1 class='appTitle'>Nominations</h1>
-        <v-btn icon class='ml-3' @click="refresh()">
+        <v-btn icon class='ml-3' @click="refresh()" aria-label="refresh">
           <v-icon medium>
             mdi-refresh
           </v-icon>
         </v-btn>
-        <v-btn v-if="!filtered" icon @click="toggleFilter()" color="accent">
+        <v-btn v-if="!filtered" icon @click="toggleFilter()" color="accent" aria-label="filter">
           <v-icon medium>
             mdi-filter
           </v-icon>
         </v-btn>
-        <v-btn v-else icon @click="toggleFilter()">
+        <v-btn v-else icon @click="toggleFilter()" aria-label="filter">
           <v-icon medium>
             mdi-filter
           </v-icon>
         </v-btn>
-        <v-btn v-if="sortBy == ''" class='ml-5  mt-2 sortField' text @click="toggleSort()">
+        <v-btn v-if="sortBy == ''" class='ml-5  mt-2 sortField' text @click="toggleSort()" aria-label="sort">
           sort by description
         </v-btn>
-        <v-btn v-else-if="sortBy == 'byName'" class='ml-5  mt-2 sortField' text @click="toggleSort()">
+        <v-btn v-else-if="sortBy == 'byName'" class='ml-5  mt-2 sortField' text @click="toggleSort()" aria-label="sort">
           sort by description
           <v-icon medium class='ml-3 sortField'>
             mdi-arrow-down
           </v-icon>
         </v-btn>
-        <v-btn v-else class='ml-5  mt-2' text @click="toggleSort()">
+        <v-btn v-else class='ml-5  mt-2' text @click="toggleSort()" aria-label="sort">
           sort by description
           <v-icon medium class='ml-3'>
             mdi-arrow-up
@@ -39,7 +39,7 @@
         </v-btn>
       </div>
       <div v-else class='d-flex'>
-        <v-btn icon class='mr-3' @click="goMainMenu">
+        <v-btn icon class='mr-3' @click="goMainMenu" aria-label="back">
           <v-icon medium>
             mdi-arrow-left
           </v-icon>
@@ -50,13 +50,14 @@
       </div>
       <v-spacer></v-spacer>
       <v-text-field
+        aria-label="search field"
         class='searchField'
         v-model="searchQuery"
         hide-details
         prepend-icon="mdi-magnify"
         single-line
       ></v-text-field>
-      <v-btn class='searchField' icon :disabled="searchIsEmpty" @click="startSearching">
+      <v-btn class='searchField' icon :disabled="searchIsEmpty" @click="startSearching" aria-label="search">
         <v-icon>mdi-arrow-top-right</v-icon>
       </v-btn>
       <v-btn class='mobile-show' icon>

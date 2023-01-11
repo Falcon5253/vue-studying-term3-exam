@@ -3,7 +3,10 @@
     <h2 class="mt-5 mb-2 big-title">Картина "{{ participant.alt[0].toUpperCase() + participant.alt.slice(1) }}"</h2>
     <div class='d-flex flex-column flex-lg-row'>
       <div>
-        <v-img class='mr-5 image' position="left center" :src="participant.image" contain></v-img>
+        <div class="print-view">
+          <img class="print-view-img" :src="participant.image" alt="Картина">
+        </div>
+        <v-img class='mr-5 image card-image' position="left center" :src="participant.image" contain></v-img>
         <h3 class='subtitle'>Описание</h3>
         <p class='text-desc mt-4'>{{ participant.about }}</p>
       </div>
@@ -47,12 +50,17 @@
     
     <h2 class='mt-10 mb-5 big-title'>Автор: {{ participantProfile.name }}</h2>
     <div class='d-flex flex-column flex-lg-row'>
-      <v-img class='mr-5' :src="participantProfile.picture" width="300" height="400"></v-img>
+      <div class="print-view">
+          <img class="print-view-img" :src="participantProfile.picture" alt="Картина">
+      </div>
+      <v-img class='mr-5 card-img' :src="participantProfile.picture" width="300" height="400"></v-img>
       <p class='text-desc mt-3'>{{ participantProfile.description }}</p>
     </div>
+    <div class='print-hidden'>
     <reviewsList
       :comments="participant.comments"
     ></reviewsList>
+  </div>
   </v-container>
 </template>
 
@@ -164,7 +172,10 @@
     }
   }
 </script>
-<style>
+<style lang='scss'>
+.print-view {
+  display: none;
+}
 .image {
   width: 800px;
   height: 600px;
@@ -204,6 +215,27 @@
   }
   .text-desc {
     font-size: 14px;
+  }
+}
+@media print {
+  .card-image {
+    display: none !important;
+  }
+  .print-view {
+    display: block;
+    width: 100%;
+    margin-right: 10px;
+    margin-top: 10px;
+    &-img {
+      width: 100%;
+
+    }
+  }
+  .print-hidden {
+    display: none !important;
+  }
+  .v-image {
+    display: none !important;
   }
 }
 </style>
