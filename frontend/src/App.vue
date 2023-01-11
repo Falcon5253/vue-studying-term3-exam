@@ -79,7 +79,7 @@
         </v-btn>
       </div>
     </v-app-bar>
-    <v-main style="height: 50px; overflow-y: scroll; padding-top: 0px;">
+    <v-main>
       <router-view></router-view>
     </v-main>
     <v-footer
@@ -194,7 +194,9 @@ html {
   cursor: default;
 }
 .v-main {
-  margin-top: 64px;
+  height: 50px;
+  overflow-y: scroll;
+  padding-top: 0px;
 }
 .mobile-show {
   display: none;
@@ -220,6 +222,15 @@ html {
   .appTitle {
     margin-top: 5px;
     font-size: 24px;
+  }
+}
+@media print {
+  html {
+    page-break-inside: avoid;
+  }
+  .v-main {
+    padding-top: 0 !important;
+    overflow-y: hidden;
   }
 }
 </style>

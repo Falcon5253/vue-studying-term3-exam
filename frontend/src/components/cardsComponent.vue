@@ -84,9 +84,6 @@
   }
 }
 @media print {
-  html, body {
-    overflow: scroll;
-  }
   .card-image {
     display: none !important;
   }
