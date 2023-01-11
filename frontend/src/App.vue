@@ -59,6 +59,9 @@
       <v-btn class='searchField' icon :disabled="searchIsEmpty" @click="startSearching">
         <v-icon>mdi-arrow-top-right</v-icon>
       </v-btn>
+      <v-btn class='mobile-show' icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
       <v-btn class='mobile-hidden' text href="/main.json">
          <span>main.json</span>
       </v-btn>
@@ -190,6 +193,12 @@ html {
 .appTitle:hover {
   cursor: default;
 }
+.v-main {
+  margin-top: 64px;
+}
+.mobile-show {
+  display: none;
+}
 @media (max-width: 1263px) {
   .searchField {
     display: none;
@@ -205,12 +214,12 @@ html {
   .mobile-hidden {
     display: none;
   }
+  .mobile-show {
+    display: block;
+  }
   .appTitle {
     margin-top: 5px;
     font-size: 24px;
-  }
-  .v-main {
-    margin-top: 64px;
   }
 }
 </style>

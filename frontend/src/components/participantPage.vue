@@ -4,7 +4,7 @@
     <div class='d-flex flex-column flex-lg-row'>
       <div>
         <v-img class='mr-5 image' position="left center" :src="participant.image" contain></v-img>
-        <h3 class='subtitle mt-2'>Описание</h3>
+        <h3 class='subtitle'>Описание</h3>
         <p class='text-desc mt-4'>{{ participant.about }}</p>
       </div>
       <v-form
@@ -180,7 +180,9 @@
   font-weight: 300;
 }
 .subtitle {
+  margin-top: 20px;
   font-size: 32px;
+  font-weight: 300;
 }
 @media (max-width: 1263px) {
   .image {
